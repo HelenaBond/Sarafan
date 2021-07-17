@@ -6,7 +6,6 @@ plugins {
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
@@ -15,9 +14,10 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // зависимость для аутентификации
 	implementation 'org.postgresql:postgresql'
 	implementation 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok' //явно указываем annotationProcessor (для java 11) чтобы Jackson смог работать с @Data (иначе не будет подхватывать сеттеры и геттеры и будет отдавать пустой обьект)
+	annotationProcessor 'org.projectlombok:lombok' //явно указываем annotationProcessor (для  (модульной) java 11) чтобы Jackson смог работать с @Data (иначе не будет подхватывать сеттеры и геттеры сущностей и будет отдавать пустой обьект)
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
