@@ -2,7 +2,6 @@ package com.example.demo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -17,17 +16,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests(ar -> ar
-//                    .mvcMatchers("/").permitAll() убираем чтобы воспользоваться страницей для входа по умолчанию
+                    .antMatchers("/", "/login**", "/js/**", "/error**").permitAll() // сюда можно зайти без аутентификации
                     .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable) //отключаем csrf чтобы не углублятся в защиту от атак на фронте
                 .oauth2Login(ln -> ln
                     .userInfoEndpoint(p -> p //аутентификация через Oauth2 протокол.
-                    .userService(this.myOAuth2UserService()))
+                    .userService(this.myOAuth2UserService())
+                    )
+                )
+                .logout(l -> l
+                        .logoutSuccessUrl("/").permitAll()
                 )
                 .oauth2Login(ln -> ln
                     .userInfoEndpoint(p ->p //аутентификация через OpenId протокол.
-                    .oidcUserService(myOidcUserService()))
+                    .oidcUserService(this.myOidcUserService()))
                 );
     }
 

@@ -15,6 +15,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // зависимость для аутентификации
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.session:spring-session-jdbc' //зависимость для сессии
 	implementation 'org.postgresql:postgresql'
 	implementation 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok' //явно указываем annotationProcessor (для  (модульной) java 11) чтобы Jackson смог работать с @Data (иначе не будет подхватывать сеттеры и геттеры сущностей и будет отдавать пустой обьект)

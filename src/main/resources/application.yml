@@ -5,7 +5,7 @@ spring:
         registration:
           github:
             clientId: 30de19480357dbd1c8fe
-            clientSecret: 9e5519faac7b626dcf1dbdcfb14f416ed14eaadf
+            clientSecret: ${clientSecret1} # прячем пароли в идее чтобы не выливать их в сеть
           google:
             clientId: 1050798306038-8vnht4ms6aitr6rujbd5magbohrih2d4.apps.googleusercontent.com
-            clientSecret: PpKlKZ61fzrbfVLe-aveiqRM
+            clientSecret: ${clientSecret2}

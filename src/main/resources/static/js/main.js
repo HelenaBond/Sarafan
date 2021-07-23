@@ -92,13 +92,6 @@ Vue.component('messages-list', {
         '<message-row v-for="message in messages" :key="message.id" :message="message" ' +
         ':editMethod="editMethod" :messages="messages" />' +
         '</div>', //циклом выводим список из props построково, цикл работает только внутри контейнера
-    created: function () { //все верхнеуровневые функции (в каждом компоненте тоже) не стрелочные, а анонимные
-        messageApi.get().then(result => // получаем поток данных из базы
-            result.json().then(data => //получаем данные из json()
-                data.forEach(message => this.messages.push(message)) //помещаем данные в props
-            )
-        )
-    },
     methods: {
         editMethod: function (message) { // текущее сообщение помещаем в data компонента
             this.message = message;
@@ -108,9 +101,26 @@ Vue.component('messages-list', {
 
 var app = new Vue({
     el: '#app',
-    //название компонента помещаем в тег и в ковычки
-    template: '<messages-list :messages="messages" />', // в свойствах указываем props
+    template:
+        '<div>' +
+            '<div v-if="!usName">Необходимо авторизоваться через' +
+                ' <a href="/login">Google или Github</a>' +
+            ' </div>' +
+            '<div v-else>' +
+                '<div>{{usName}}&nbsp<a href="/logout">Выйти</a></div>' +
+                //название компонента помещаем в тег и в ковычки
+                '<messages-list :messages="messages" />' + // в свойствах указываем props
+            '</div>' +
+        '</div>',
     data: { //эти данные можно обновлять только через методы массивов (push, splice, delete)
-        messages: []
-    }
+        messages: frontendData.messages,
+        usName: frontendData.usName
+    }, // инициализацию коллекции messages переносим на уровень выше
+    created: function () { //все верхнеуровневые функции (в каждом компоненте тоже) не стрелочные, а анонимные
+        // messageApi.get().then(result => // получаем поток данных из базы
+        //     result.json().then(data => //получаем данные из json()
+        //         data.forEach(message => this.messages.push(message)) //помещаем данные в props
+        //     )
+        // )
+    },
 });
